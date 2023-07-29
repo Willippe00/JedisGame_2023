@@ -3,6 +3,10 @@ from core.action import Action, Direction, Pattern, Teleport
 from core.game_state import GameState
 
 class MyBot:
+
+    rayon = 1
+    step = 0
+    distanceCercle = 0
     """
     (fr)
     Cette classe représente votre bot. Vous pouvez y définir des attributs et des méthodes qui 
@@ -13,8 +17,12 @@ class MyBot:
     between each call of the `tick` method.
     """
     def __init__(self):
+        direction = None
         self.__name = "name_of_my_super_cool_bot"
         self.__first_turn = True
+        rayon = 1
+        step = 0
+        distanceCercle = 4
 
 
     def __random_action(self) -> Action:
@@ -22,6 +30,24 @@ class MyBot:
 
 
     def tick(self, state: GameState) -> Action:
+
+        if(self.step == self.distanceCercle):
+            self.rayon = self.rayon + 2
+            self.step = 0
+
+
+        self.step = self.step + 1
+
+        if self.step < self.distanceCercle/4:
+            direction = Direction.RIGHT
+        elif self.step  > self.distanceCercle/4 and self.step  < self.distanceCercle/2:
+            direction = Direction.UP
+        elif self.step  > self.distanceCercle/2 and self.step  < 3*self.distanceCercle/4:
+            direction = Direction.LEFT
+        elif self.step  > 3*self.distanceCercle/4:
+            direction = Direction.DOWN
+
+
         """
         (fr)
         Cette méthode est appelée à chaque tick de jeu. Vous pouvez y définir le comportement de
@@ -35,9 +61,12 @@ class MyBot:
             state (GameState):  (fr) L'état du jeu.
                                 (en) The state of the game.
         """
-        if self.__first_turn:
-            self.__first_turn = False
-            return Action(Pattern([Direction.UP, Direction.RIGHT]))
+
+        return Action(direction)
+
+        #if self.__first_turn:
+            #self.__first_turn = False
+
        
 
-        return self.__random_action()
+        #return self.__random_action()
