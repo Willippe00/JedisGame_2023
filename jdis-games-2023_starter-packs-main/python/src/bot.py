@@ -7,6 +7,7 @@ class MyBot:
     rayon = 1
     step = 0
     distanceCercle = 0
+    direction = Direction.UP
     """
     (fr)
     Cette classe représente votre bot. Vous pouvez y définir des attributs et des méthodes qui 
@@ -30,7 +31,7 @@ class MyBot:
 
 
     def tick(self, state: GameState) -> Action:
-
+        self.distanceCercle = 4 *self.rayon
         if(self.step == self.distanceCercle):
             self.rayon = self.rayon + 2
             self.step = 0
@@ -39,13 +40,13 @@ class MyBot:
         self.step = self.step + 1
 
         if self.step < self.distanceCercle/4:
-            direction = Direction.RIGHT
+            self.direction = Direction.RIGHT
         elif self.step  > self.distanceCercle/4 and self.step  < self.distanceCercle/2:
-            direction = Direction.UP
+            self.direction = Direction.UP
         elif self.step  > self.distanceCercle/2 and self.step  < 3*self.distanceCercle/4:
-            direction = Direction.LEFT
+            self.direction = Direction.LEFT
         elif self.step  > 3*self.distanceCercle/4:
-            direction = Direction.DOWN
+            self.direction = Direction.DOWN
 
 
         """
@@ -62,7 +63,8 @@ class MyBot:
                                 (en) The state of the game.
         """
 
-        return Action(direction)
+        #return Action(Pattern([self.direction]))
+        return Action(self.direction)
 
         #if self.__first_turn:
             #self.__first_turn = False
