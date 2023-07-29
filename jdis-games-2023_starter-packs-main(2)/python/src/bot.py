@@ -4,7 +4,7 @@ from core.game_state import GameState
 from core.game_state import Player
 
 class MyBot:
-    sens = 1
+
     rayon = 1
     step = 0
     distanceCercle = 0
@@ -31,35 +31,23 @@ class MyBot:
     def __random_action(self) -> Action:
         return random.choice(list(Direction))
 
-    def path_sauvetage(self) -> Action:
-        return Action(Pattern[Direction.UP,Direction.LEFT])
-
 
     def tick(self, state: GameState) -> Action:
 
 
-
-        #return Action(Pattern([Direction.DOWN,Direction.LEFT]))
-
-
-        if state.players["VinnieBaby"].alive == 0:
+        #if state.players["VinnieBaby"].alive != self.tick_absolue:
         #    self.rayon = 1
-            print("camion")
-            self.step =0
-            self.rayon = 6
-            #rjouter le init
-
-
-
-
-
 
 
         self.distanceCercle = 2 *self.rayon
         if(self.step == self.distanceCercle):
-            self.rayon = self.rayon + 4
+            self.rayon = self.rayon + 5
             self.step = 0
 
+        self.tick_absolue = self.tick_absolue + 1
+        if self.tick_absolue == 255:
+            self.tick_absolue == 0
+            self.rayon = 3
 
 
         self.step = self.step + 1
@@ -71,9 +59,7 @@ class MyBot:
         elif self.step  > self.distanceCercle/2 and self.step  < 3*self.distanceCercle/4:
             self.direction = Direction.LEFT
         elif self.step  > 3*self.distanceCercle/4:
-             self.direction = Direction.DOWN
-
-
+            self.direction = Direction.DOWN
 
 
         """
@@ -99,4 +85,3 @@ class MyBot:
        
 
         #return self.__random_action()
-
