@@ -1,6 +1,7 @@
 import random
 from core.action import Action, Direction, Pattern, Teleport
 from core.game_state import GameState
+from core.game_state import Player
 
 class MyBot:
 
@@ -8,6 +9,7 @@ class MyBot:
     step = 0
     distanceCercle = 0
     direction = Direction.UP
+    tick_absolue =0
     """
     (fr)
     Cette classe représente votre bot. Vous pouvez y définir des attributs et des méthodes qui 
@@ -31,10 +33,20 @@ class MyBot:
 
 
     def tick(self, state: GameState) -> Action:
-        self.distanceCercle = 4 *self.rayon
+
+
+        #if state.players["VinnieBaby"].alive != self.tick_absolue:
+        #    self.rayon = 1
+
+
+        self.distanceCercle = 2 *self.rayon
         if(self.step == self.distanceCercle):
-            self.rayon = self.rayon + 2
+            self.rayon = self.rayon + 3
             self.step = 0
+
+        self.tick_absolue = self.tick_absolue + 1
+        if self.tick_absolue == 255:
+            self.rayon = 4
 
 
         self.step = self.step + 1
